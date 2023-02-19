@@ -44,7 +44,7 @@ const Login = () => {
                             fontSize="16px"
                             textAlign={matchDownSM ? "center" : "inherit"}
                           >
-                            Enter your credentials to continue
+                            Choose a preferred method to sign in to your account
                           </Typography>
                         </Stack>
                       </Grid>

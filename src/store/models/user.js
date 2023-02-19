@@ -1,13 +1,16 @@
 export default {
   state: {
-    firebaseProfile: null
+    firebaseProfile: null,
+    openAI: {
+      apiKey: ""
+    }
   },
   reducers: {
     setFirebaseProfile(state, payload) {
-      return {
-        ...state,
-        firebaseProfile: payload
-      };
+      state.firebaseProfile = payload;
+    },
+    setOpenAIAPIKey(state, payload) {
+      state.openAI.apiKey = payload;
     }
   },
   effects: (dispatch) => ({})

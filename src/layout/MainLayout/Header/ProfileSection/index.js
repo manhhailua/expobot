@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import {
   Avatar,
@@ -15,7 +15,8 @@ import {
   Paper,
   Popper,
   Stack,
-  Typography
+  Typography,
+  useMediaQuery
 } from "@mui/material";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import MainCard from "ui-component/cards/MainCard";
@@ -23,17 +24,19 @@ import Transitions from "ui-component/extended/Transitions";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
 import { signOut } from "firebase/auth";
 import { auth } from "utils/firebase";
+import AccountSettingsDialog from "./AccountSettingsDialog";
 
 const ProfileSection = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const customization = useSelector((state) => state.customization);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [sdm, setSdm] = useState(true);
-  const [notification, setNotification] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   /**
    * anchorRef is used on different componets and specifying one type leads to other components throwing an error
    * */
@@ -55,6 +58,14 @@ const ProfileSection = () => {
     setOpen(false);
   };
 
+  const handleCloseModal = (event) => {
+    setOpenDialog(false);
+  };
+
+  const handleSaveModal = (event) => {
+    handleCloseModal(event);
+  };
+
   const handleListItemClick = (event, index, route = "") => {
     setSelectedIndex(index);
     handleClose(event);
@@ -63,8 +74,13 @@ const ProfileSection = () => {
       navigate(route);
     }
   };
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClickAccountSettings = (event) => {
+    setOpenDialog(true);
   };
 
   const prevOpen = useRef(open);
@@ -178,7 +194,7 @@ const ProfileSection = () => {
                         <ListItemButton
                           sx={{ borderRadius: `${customization?.borderRadius}px` }}
                           selected={selectedIndex === 0}
-                          onClick={(event) => handleListItemClick(event, 0, "/user/account-profile/profile1")}
+                          onClick={handleClickAccountSettings}
                         >
                           <ListItemIcon>
                             <IconSettings stroke={1.5} size="1.3rem" />
@@ -204,6 +220,11 @@ const ProfileSection = () => {
           </Transitions>
         )}
       </Popper>
+      <AccountSettingsDialog
+        open={openDialog}
+        onClose={handleCloseModal}
+        onSave={handleSaveModal}
+      />
     </>
   );
 };

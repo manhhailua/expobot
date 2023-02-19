@@ -10,28 +10,16 @@ export default {
   },
   reducers: {
     setActiveId(state, payload) {
-      return {
-        ...state,
-        isOpen: [payload.id]
-      };
+      state.isOpen = [payload.id];
     },
     toggleLeftDrawer(state, payload) {
-      return {
-        ...state,
-        opened: payload.opened
-      };
+      state.opened = payload.opened;
     },
     setFontFamily(state, payload) {
-      return {
-        ...state,
-        fontFamily: payload.fontFamily
-      };
+      state.fontFamily = payload.fontFamily;
     },
     setBorderRadius(state, payload) {
-      return {
-        ...state,
-        borderRadius: payload.borderRadius
-      };
+      state.borderRadius = payload.borderRadius;
     }
   },
   effects: (dispatch) => ({
