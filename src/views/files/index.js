@@ -11,14 +11,18 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
+import { IconCopy } from "@tabler/icons-react";
+import IconButton from "@mui/material/IconButton";
+import { useCopyToClipboard } from "utils/hooks";
 
 const FilesPage = () => {
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.files?.list);
+  const [value, copy] = useCopyToClipboard();
 
   useEffect(() => {
     dispatch.files.getList().then();
-  }, []);
+  }, [dispatch.files]);
 
   const renderStatus = (status) => {
     let color = "default";
@@ -54,8 +58,15 @@ const FilesPage = () => {
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell>
                   {row.id}
+                  <IconButton
+                    onClick={() => copy(row.id)}
+                    size="small"
+                    color="primary"
+                  >
+                    <IconCopy />
+                  </IconButton>
                 </TableCell>
                 <TableCell align="right">{row.filename}</TableCell>
                 <TableCell align="right">{row.purpose}</TableCell>

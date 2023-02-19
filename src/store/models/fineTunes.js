@@ -11,9 +11,18 @@ export default {
     }
   },
   effects: (dispatch) => ({
-    async getList() {
+    async list() {
       const list = await openAI.get("/fine-tunes");
       dispatch.fineTunes.setList(list.data?.data);
+    },
+    async retrieve(id) {
+      return await openAI.get(`/fine-tunes/${id}`);
+    },
+    async listEvents(id) {
+      return await openAI.get(`/fine-tunes/${id}/events`);
+    },
+    async cancel(id) {
+      return await openAI.post(`/fine-tunes/${id}/cancel`);
     }
   })
 };

@@ -6,6 +6,7 @@ import Loadable from "ui-component/Loadable";
 const DashboardDefault = Loadable(lazy(() => import("views/dashboard/Default")));
 const FilesPage = Loadable(lazy(() => import("views/files")));
 const FineTunesPage = Loadable(lazy(() => import("views/fine-tunes")));
+const RetrieveFineTunePage = Loadable(lazy(() => import("views/fine-tunes/retrieve")));
 
 const MainRoutes = {
   path: "/",
@@ -26,6 +27,10 @@ const MainRoutes = {
     {
       path: "fine-tunes",
       element: <FineTunesPage />
+    },
+    {
+      path: "fine-tunes/:fineTuneId",
+      element: <RetrieveFineTunePage />
     }
   ]
 };

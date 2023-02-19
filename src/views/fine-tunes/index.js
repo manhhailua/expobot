@@ -10,13 +10,20 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Chip from "@mui/material/Chip";
+import Link from "@mui/material/Link";
+import { useNavigate } from "react-router-dom";
+import { useCopyToClipboard } from "utils/hooks";
+import { IconCopy } from "@tabler/icons-react";
+import IconButton from "@mui/material/IconButton";
 
 const FineTunesPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const rows = useSelector((state) => state.fineTunes?.list);
+  const [value, copy] = useCopyToClipboard();
 
   useEffect(() => {
-    dispatch.fineTunes.getList().then();
+    dispatch.fineTunes.list().then();
   }, []);
 
   const renderStatus = (status) => {
@@ -46,10 +53,9 @@ const FineTunesPage = () => {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
+              <TableCell>Model</TableCell>
               <TableCell align="right">Fine tuned model</TableCell>
-              <TableCell align="right">Model</TableCell>
               <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Updated at</TableCell>
               <TableCell align="right">Created at</TableCell>
             </TableRow>
           </TableHead>
@@ -59,13 +65,25 @@ const FineTunesPage = () => {
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.id}
+                <TableCell>
+                  <Link
+                    to={`/fine-tunes/${row.id}`}
+                    onClick={() => navigate(`/fine-tunes/${row.id}`)}
+                    sx={{ cursor: "pointer" }}
+                  >{row.id}</Link>
                 </TableCell>
-                <TableCell align="right">{row.fine_tuned_model}</TableCell>
-                <TableCell align="right">{row.model}</TableCell>
+                <TableCell>{row.model}</TableCell>
+                <TableCell align="right">
+                  {row.fine_tuned_model}
+                  {row.fine_tuned_model && <IconButton
+                    onClick={() => copy(row.fine_tuned_model)}
+                    size="small"
+                    color="primary"
+                  >
+                    <IconCopy />
+                  </IconButton>}
+                </TableCell>
                 <TableCell align="right">{renderStatus(row.status)}</TableCell>
-                <TableCell align="right">{moment.unix(row.updated_at).format()}</TableCell>
                 <TableCell align="right">{moment.unix(row.created_at).format()}</TableCell>
               </TableRow>
             ))}
