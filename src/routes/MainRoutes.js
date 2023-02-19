@@ -4,6 +4,7 @@ import MainLayout from "layout/MainLayout";
 import Loadable from "ui-component/Loadable";
 
 const DashboardDefault = Loadable(lazy(() => import("views/dashboard/Default")));
+const FilesPage = Loadable(lazy(() => import("views/files")));
 const FineTunesPage = Loadable(lazy(() => import("views/fine-tunes")));
 
 const MainRoutes = {
@@ -17,6 +18,10 @@ const MainRoutes = {
     {
       path: "dashboard",
       element: <DashboardDefault />
+    },
+    {
+      path: "files",
+      element: <FilesPage />
     },
     {
       path: "fine-tunes",

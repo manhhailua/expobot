@@ -1,21 +1,22 @@
 import { useSelector } from "react-redux";
-
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
-
-// routing
 import Routes from "routes";
-
-// defaultTheme
 import themes from "themes";
-
-// project imports
 import NavigationScroll from "layout/NavigationScroll";
-
-// ==============================|| APP ||============================== //
+import { useEffect } from "react";
+import { openAI } from "utils/axios";
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
+  const apiKey = useSelector((state) => state.user?.openAI?.apiKey);
+
+  useEffect(() => {
+    openAI.interceptors.request.use((config) => {
+      config.headers["Authorization"] = `Bearer ${apiKey}`;
+      return config;
+    });
+  }, [apiKey]);
 
   return (
     <StyledEngineProvider injectFirst>

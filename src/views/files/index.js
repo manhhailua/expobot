@@ -1,35 +1,30 @@
 import MainCard from "ui-component/cards/MainCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import moment from "moment/moment";
-import Paper from "@mui/material/Paper";
+import moment from "moment";
+import prettyBytes from "pretty-bytes";
 import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
 
-const FineTunesPage = () => {
+const FilesPage = () => {
   const dispatch = useDispatch();
-  const rows = useSelector((state) => state.fineTunes?.list);
+  const rows = useSelector((state) => state.files?.list);
 
   useEffect(() => {
-    dispatch.fineTunes.getList().then();
+    dispatch.files.getList().then();
   }, []);
 
   const renderStatus = (status) => {
-    let color = "warning";
+    let color = "default";
 
     switch (status) {
-      case "succeeded":
-        color = "success";
-        break;
-      case "failed":
-        color = "error";
-        break;
-      case "pending":
+      case "processed":
         color = "info";
         break;
     }
@@ -46,10 +41,10 @@ const FineTunesPage = () => {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell align="right">Fine tuned model</TableCell>
-              <TableCell align="right">Model</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Purpose</TableCell>
               <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Updated at</TableCell>
+              <TableCell align="right">Bytes</TableCell>
               <TableCell align="right">Created at</TableCell>
             </TableRow>
           </TableHead>
@@ -62,10 +57,10 @@ const FineTunesPage = () => {
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="right">{row.fine_tuned_model}</TableCell>
-                <TableCell align="right">{row.model}</TableCell>
+                <TableCell align="right">{row.filename}</TableCell>
+                <TableCell align="right">{row.purpose}</TableCell>
                 <TableCell align="right">{renderStatus(row.status)}</TableCell>
-                <TableCell align="right">{moment.unix(row.updated_at).format()}</TableCell>
+                <TableCell align="right">{prettyBytes(row.bytes)}</TableCell>
                 <TableCell align="right">{moment.unix(row.created_at).format()}</TableCell>
               </TableRow>
             ))}
@@ -76,4 +71,4 @@ const FineTunesPage = () => {
   );
 };
 
-export default FineTunesPage;
+export default FilesPage;
