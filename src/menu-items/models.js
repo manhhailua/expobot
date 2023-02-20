@@ -1,4 +1,4 @@
-import { IconBox, IconFileUpload } from "@tabler/icons-react";
+import { Icon3dCubeSphere, IconFileUpload } from "@tabler/icons-react";
 
 const pages = {
   id: "models",
@@ -17,7 +17,7 @@ const pages = {
       title: "Fine-tunes",
       type: "item",
       url: "/fine-tunes",
-      icon: IconBox
+      icon: Icon3dCubeSphere
     }
   ]
 };

@@ -1,9 +1,9 @@
 const config = {
   // basename: only at build time to set, and Don't add '/' at end off BASENAME for breadcrumbs, also Don't put only '/' use blank('') instead,
   // like '/berry-material-react/react/default'
-  basename: "/",
-  defaultPath: "/dashboard",
-  defaultId: "default",
+  basename: '/',
+  defaultPath: '/dashboard',
+  defaultId: 'default',
   fontFamily: `'Roboto', sans-serif`,
   borderRadius: 12,
   firebaseConfig: {
@@ -14,8 +14,9 @@ const config = {
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
-    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
-  }
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  },
+  maxFileSize: 1000000000, // 1GB
 };
 
 export default config;
